@@ -37,6 +37,5 @@ pub trait ChatAdapter: Send + Sync {
     ) -> ChatResult<Vec<Reaction>>;
 
     /// Get thread replies for a message.
-    async fn get_thread(&self, channel: &str, parent_id: &MessageId)
-        -> ChatResult<Vec<Message>>;
+    async fn get_thread(&self, channel: &str, parent_id: &MessageId) -> ChatResult<Vec<Message>>;
 }
