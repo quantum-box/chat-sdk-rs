@@ -8,6 +8,12 @@ pub mod error;
 pub mod model;
 pub mod oauth;
 
+#[cfg(feature = "slack")]
+pub mod slack;
+
 pub use adapter::ChatAdapter;
 pub use error::{ChatError, ChatResult};
 pub use model::{Channel, Message, MessageId, Reaction, Thread, User};
+
+#[cfg(feature = "slack")]
+pub use slack::SlackAdapter;
