@@ -212,7 +212,10 @@ impl ChatAdapter for SlackAdapter {
         let resp: SlackChannelListResp = self
             .api_get(
                 "conversations.list",
-                &[("types", "public_channel,private_channel"), ("limit", "200")],
+                &[
+                    ("types", "public_channel,private_channel"),
+                    ("limit", "200"),
+                ],
             )
             .await?;
         Ok(resp
@@ -272,11 +275,7 @@ impl ChatAdapter for SlackAdapter {
             .collect())
     }
 
-    async fn get_thread(
-        &self,
-        channel: &str,
-        parent_id: &MessageId,
-    ) -> ChatResult<Vec<Message>> {
+    async fn get_thread(&self, channel: &str, parent_id: &MessageId) -> ChatResult<Vec<Message>> {
         let resp: SlackRepliesResp = self
             .api_get(
                 "conversations.replies",
@@ -296,12 +295,14 @@ mod tests {
     use super::*;
 
     #[test]
+    #[cfg_attr(miri, ignore)]
     fn platform_name() {
         let adapter = SlackAdapter::new("xoxb-test");
         assert_eq!(adapter.platform(), "slack");
     }
 
     #[test]
+    #[cfg_attr(miri, ignore)]
     fn with_client_constructor() {
         let client = Client::new();
         let adapter = SlackAdapter::with_client(client, "xoxb-test");
@@ -379,7 +380,12 @@ mod tests {
     fn check_slack_error_rate_limited() {
         let body = serde_json::json!({"ok": false, "error": "ratelimited"});
         let err = check_slack_error(&body).unwrap_err();
-        assert!(matches!(err, ChatError::RateLimited { retry_after_secs: 30 }));
+        assert!(matches!(
+            err,
+            ChatError::RateLimited {
+                retry_after_secs: 30
+            }
+        ));
     }
 
     #[test]
