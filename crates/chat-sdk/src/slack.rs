@@ -295,12 +295,14 @@ mod tests {
     use super::*;
 
     #[test]
+    #[cfg_attr(miri, ignore)]
     fn platform_name() {
         let adapter = SlackAdapter::new("xoxb-test");
         assert_eq!(adapter.platform(), "slack");
     }
 
     #[test]
+    #[cfg_attr(miri, ignore)]
     fn with_client_constructor() {
         let client = Client::new();
         let adapter = SlackAdapter::with_client(client, "xoxb-test");
