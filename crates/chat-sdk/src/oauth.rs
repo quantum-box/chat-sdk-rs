@@ -61,19 +61,7 @@ pub struct CallbackParams {
 impl OAuthConfig {
     /// Generate the authorization URL for the OAuth flow.
     pub fn authorize_url(&self) -> ChatResult<AuthorizationRequest> {
-<<<<<<< HEAD
-        let client = oauth2::basic::BasicClient::new(ClientId::new(self.client_id.clone()))
-            .set_client_secret(ClientSecret::new(self.client_secret.clone()))
-            .set_auth_uri(
-                AuthUrl::new(self.auth_url.clone()).map_err(|e| ChatError::OAuth(e.to_string()))?,
-            )
-            .set_redirect_uri(
-                RedirectUrl::new(self.redirect_url.clone())
-                    .map_err(|e| ChatError::OAuth(e.to_string()))?,
-            );
-=======
         let client = self.build_client()?;
->>>>>>> 4e7ca73 (feat: implement OAuth token exchange, callback server, and token persistence)
 
         let mut auth_request = client.authorize_url(CsrfToken::new_random);
         for scope in &self.scopes {
