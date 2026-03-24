@@ -36,10 +36,22 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
 # OAuth
-oauth2 = "5"
+oauth2 = { version = "5", features = ["reqwest"] }
+
+# HTTP server (OAuth callback)
+axum = "0.8"
+
+# Directories
+dirs = "6"
+
+# Open browser
+open = "5"
 
 # Async trait
 async-trait = "0.1"
+
+# URL encoding
+urlencoding = "2"
 
 # Testing
 tokio-test = "0.4"

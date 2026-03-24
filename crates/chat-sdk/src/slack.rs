@@ -295,14 +295,20 @@ mod tests {
     use super::*;
 
     #[test]
+<<<<<<< HEAD
     #[cfg_attr(miri, ignore)]
+=======
+>>>>>>> 4e7ca73 (feat: implement OAuth token exchange, callback server, and token persistence)
     fn platform_name() {
         let adapter = SlackAdapter::new("xoxb-test");
         assert_eq!(adapter.platform(), "slack");
     }
 
     #[test]
+<<<<<<< HEAD
     #[cfg_attr(miri, ignore)]
+=======
+>>>>>>> 4e7ca73 (feat: implement OAuth token exchange, callback server, and token persistence)
     fn with_client_constructor() {
         let client = Client::new();
         let adapter = SlackAdapter::with_client(client, "xoxb-test");
