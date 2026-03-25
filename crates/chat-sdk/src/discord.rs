@@ -54,10 +54,9 @@ impl DiscordAdapter {
     }
 
     fn parse_message_id(id: &MessageId) -> ChatResult<SerenityMessageId> {
-        let n: u64 = id
-            .0
-            .parse()
-            .map_err(|_| ChatError::Other(format!("invalid message id: {}", id.0)))?;
+        let n: u64 =
+            id.0.parse()
+                .map_err(|_| ChatError::Other(format!("invalid message id: {}", id.0)))?;
         Ok(SerenityMessageId::new(n))
     }
 }
@@ -269,11 +268,7 @@ impl ChatAdapter for DiscordAdapter {
         Ok(result)
     }
 
-    async fn get_thread(
-        &self,
-        channel: &str,
-        _parent_id: &MessageId,
-    ) -> ChatResult<Vec<Message>> {
+    async fn get_thread(&self, channel: &str, _parent_id: &MessageId) -> ChatResult<Vec<Message>> {
         // Discord threads are channels; fall back to fetching recent messages.
         let channel_id = Self::parse_channel_id(channel)?;
 
