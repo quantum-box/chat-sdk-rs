@@ -53,5 +53,10 @@ async-trait = "0.1"
 # URL encoding
 urlencoding = "2"
 
+# HMAC signature verification
+hmac = "0.12"
+sha2 = "0.10"
+hex = "0.4"
+
 # Testing
 tokio-test = "0.4"

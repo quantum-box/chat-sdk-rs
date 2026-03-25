@@ -509,9 +509,7 @@ mod tests {
     #[tokio::test]
     async fn dispatch_returns_first_error() {
         let router = EventRouter::builder()
-            .on_message(|_| {
-                Box::pin(async { Err(crate::error::ChatError::Other("boom".into())) })
-            })
+            .on_message(|_| Box::pin(async { Err(crate::error::ChatError::Other("boom".into())) }))
             .build();
 
         let result = router.dispatch(ChatEvent::Message(test_message())).await;
@@ -525,9 +523,7 @@ mod tests {
         let c = counter.clone();
 
         let router = EventRouter::builder()
-            .on_message(|_| {
-                Box::pin(async { Err(crate::error::ChatError::Other("fail".into())) })
-            })
+            .on_message(|_| Box::pin(async { Err(crate::error::ChatError::Other("fail".into())) }))
             .on_message(move |_| {
                 let c = c.clone();
                 Box::pin(async move {
