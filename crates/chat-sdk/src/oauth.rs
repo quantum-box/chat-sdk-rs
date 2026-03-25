@@ -25,8 +25,7 @@ impl OAuthConfig {
         let client = oauth2::basic::BasicClient::new(ClientId::new(self.client_id.clone()))
             .set_client_secret(ClientSecret::new(self.client_secret.clone()))
             .set_auth_uri(
-                AuthUrl::new(self.auth_url.clone())
-                    .map_err(|e| ChatError::OAuth(e.to_string()))?,
+                AuthUrl::new(self.auth_url.clone()).map_err(|e| ChatError::OAuth(e.to_string()))?,
             )
             .set_redirect_uri(
                 RedirectUrl::new(self.redirect_url.clone())

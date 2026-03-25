@@ -2,7 +2,11 @@ use anyhow::Result;
 use clap::{Parser, Subcommand};
 
 #[derive(Parser)]
-#[command(name = "chat-sdk", version, about = "Chat SDK CLI - manage messages across platforms")]
+#[command(
+    name = "chat-sdk",
+    version,
+    about = "Chat SDK CLI - manage messages across platforms"
+)]
 struct Cli {
     #[command(subcommand)]
     command: Commands,
