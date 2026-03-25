@@ -1,0 +1,7 @@
+[advisories]
+ignore = [
+    # RUSTSEC-2026-0049: rustls-webpki CRL distribution point matching issue.
+    # Transitive dep from serenity 0.12.5 → rustls 0.22 → rustls-webpki 0.102.
+    # Low impact: requires compromising a trusted CA. No upstream fix available yet.
+    "RUSTSEC-2026-0049",
+]

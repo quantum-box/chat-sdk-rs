@@ -173,18 +173,17 @@ impl Card {
         }
 
         // Thumbnail as accessory on description or standalone
-        if let Some(ref thumb) = self.thumbnail_url {
-            if let Some(last_section) = blocks
+        if let Some(ref thumb) = self.thumbnail_url
+            && let Some(last_section) = blocks
                 .iter_mut()
                 .rev()
                 .find(|b| b.get("type").and_then(|v| v.as_str()) == Some("section"))
-            {
-                last_section["accessory"] = serde_json::json!({
-                    "type": "image",
-                    "image_url": thumb,
-                    "alt_text": "thumbnail",
-                });
-            }
+        {
+            last_section["accessory"] = serde_json::json!({
+                "type": "image",
+                "image_url": thumb,
+                "alt_text": "thumbnail",
+            });
         }
 
         // Fields – group into section blocks (max 10 fields per section in Slack)
