@@ -6,8 +6,10 @@
 pub mod adapter;
 pub mod command;
 pub mod error;
+pub mod event;
 pub mod model;
 pub mod oauth;
+pub mod webhook;
 
 #[cfg(feature = "slack")]
 pub mod slack;
@@ -18,8 +20,16 @@ pub mod discord;
 pub use adapter::ChatAdapter;
 pub use command::{CommandResponse, CommandRouter, ResponseBuilder, SlashCommand};
 pub use error::{ChatError, ChatResult};
+pub use event::{
+    ChatEvent, EventHandlerBuilder, EventKind, EventRouter, MentionEvent, MessageDeletedEvent,
+    ReactionEvent,
+};
 pub use model::{Channel, Message, MessageId, Reaction, SendMessage, Thread, User};
 pub use oauth::{OAuthConfig, TokenData, TokenStore};
+pub use webhook::{
+    SlackEnvelope, SlackEvent, WebhookConfig, WebhookServer, router as webhook_router,
+    start as start_webhook, verify_signature,
+};
 
 #[cfg(feature = "slack")]
 pub use slack::SlackAdapter;
