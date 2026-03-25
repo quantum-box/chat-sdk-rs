@@ -184,9 +184,7 @@ impl StateAdapter for InMemoryStateAdapter {
     ) -> ChatResult<bool> {
         let key = (channel.to_owned(), thread_id.to_owned());
         let subs = self.subscriptions.read().await;
-        Ok(subs
-            .get(&key)
-            .is_some_and(|set| set.contains(user_id)))
+        Ok(subs.get(&key).is_some_and(|set| set.contains(user_id)))
     }
 
     async fn set_session(&self, session: Session) -> ChatResult<()> {
@@ -253,8 +251,7 @@ mod redis_impl {
     impl RedisStateAdapter {
         /// Connect to Redis with the given URL (e.g. `redis://127.0.0.1/`).
         pub fn new(url: &str) -> ChatResult<Self> {
-            let client =
-                redis::Client::open(url).map_err(|e| ChatError::Other(e.to_string()))?;
+            let client = redis::Client::open(url).map_err(|e| ChatError::Other(e.to_string()))?;
             Ok(Self {
                 client,
                 prefix: "chat-sdk".to_owned(),
@@ -279,9 +276,7 @@ mod redis_impl {
             format!("{}:user-sessions:{}", self.prefix, user_id)
         }
 
-        async fn get_conn(
-            &self,
-        ) -> ChatResult<redis::aio::MultiplexedConnection> {
+        async fn get_conn(&self) -> ChatResult<redis::aio::MultiplexedConnection> {
             self.client
                 .get_multiplexed_async_connection()
                 .await
@@ -291,12 +286,7 @@ mod redis_impl {
 
     #[async_trait]
     impl StateAdapter for RedisStateAdapter {
-        async fn subscribe(
-            &self,
-            channel: &str,
-            thread_id: &str,
-            user_id: &str,
-        ) -> ChatResult<()> {
+        async fn subscribe(&self, channel: &str, thread_id: &str, user_id: &str) -> ChatResult<()> {
             let mut conn = self.get_conn().await?;
             let key = self.sub_key(channel, thread_id);
             redis::cmd("SADD")
@@ -325,11 +315,7 @@ mod redis_impl {
             Ok(())
         }
 
-        async fn get_subscribers(
-            &self,
-            channel: &str,
-            thread_id: &str,
-        ) -> ChatResult<Vec<String>> {
+        async fn get_subscribers(&self, channel: &str, thread_id: &str) -> ChatResult<Vec<String>> {
             let mut conn = self.get_conn().await?;
             let key = self.sub_key(channel, thread_id);
             let members: Vec<String> = redis::cmd("SMEMBERS")
@@ -411,8 +397,8 @@ mod redis_impl {
 
             match result {
                 Some(json) => {
-                    let session: Session = serde_json::from_str(&json)
-                        .map_err(|e| ChatError::Other(e.to_string()))?;
+                    let session: Session =
+                        serde_json::from_str(&json).map_err(|e| ChatError::Other(e.to_string()))?;
                     Ok(Some(session))
                 }
                 None => Ok(None),
@@ -424,21 +410,21 @@ mod redis_impl {
             let key = self.session_key(session_id);
 
             // Retrieve session to clean up user index.
-            if let Some(json) = redis::cmd("GET")
+            let existing: Option<String> = redis::cmd("GET")
                 .arg(&key)
-                .query_async::<Option<String>>(&mut conn)
+                .query_async(&mut conn)
                 .await
-                .map_err(|e| ChatError::Other(e.to_string()))?
+                .map_err(|e| ChatError::Other(e.to_string()))?;
+            if let Some(session) =
+                existing.and_then(|json| serde_json::from_str::<Session>(&json).ok())
             {
-                if let Ok(session) = serde_json::from_str::<Session>(&json) {
-                    let user_sessions_key = self.user_sessions_key(&session.user_id);
-                    redis::cmd("SREM")
-                        .arg(&user_sessions_key)
-                        .arg(session_id)
-                        .exec_async(&mut conn)
-                        .await
-                        .map_err(|e| ChatError::Other(e.to_string()))?;
-                }
+                let user_key = self.user_sessions_key(&session.user_id);
+                redis::cmd("SREM")
+                    .arg(&user_key)
+                    .arg(session_id)
+                    .exec_async(&mut conn)
+                    .await
+                    .map_err(|e| ChatError::Other(e.to_string()))?;
             }
 
             redis::cmd("DEL")
@@ -567,8 +553,7 @@ mod tests {
     #[tokio::test]
     async fn session_set_and_get() {
         let state = InMemoryStateAdapter::new();
-        let session = Session::new("s1", "U1", "slack")
-            .with_metadata("team", "engineering");
+        let session = Session::new("s1", "U1", "slack").with_metadata("team", "engineering");
 
         state.set_session(session).await.unwrap();
 
