@@ -11,6 +11,7 @@ pub mod event;
 pub mod format;
 pub mod model;
 pub mod oauth;
+pub mod streaming;
 pub mod webhook;
 
 #[cfg(feature = "slack")]
@@ -30,6 +31,7 @@ pub use event::{
 pub use format::{Document, MessageFormatter, Node, Platform};
 pub use model::{Channel, Message, MessageId, Reaction, SendMessage, Thread, User};
 pub use oauth::{OAuthConfig, TokenData, TokenStore};
+pub use streaming::StreamingMessage;
 pub use webhook::{
     SlackEnvelope, SlackEvent, WebhookConfig, WebhookServer, router as webhook_router,
     start as start_webhook, verify_signature,

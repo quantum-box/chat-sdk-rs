@@ -293,6 +293,21 @@ impl ChatAdapter for SlackAdapter {
             .map(|m| slack_msg_to_message(channel, m))
             .collect())
     }
+
+    async fn edit_message(
+        &self,
+        channel: &str,
+        message_id: &MessageId,
+        new_text: &str,
+    ) -> ChatResult<()> {
+        let body = serde_json::json!({
+            "channel": channel,
+            "ts": message_id.0,
+            "text": new_text,
+        });
+        let _: serde_json::Value = self.api_post("chat.update", &body).await?;
+        Ok(())
+    }
 }
 
 #[cfg(test)]

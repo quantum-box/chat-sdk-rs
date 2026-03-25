@@ -280,6 +280,22 @@ impl ChatAdapter for DiscordAdapter {
 
         Ok(msgs.iter().map(serenity_msg_to_message).collect())
     }
+
+    async fn edit_message(
+        &self,
+        channel: &str,
+        message_id: &MessageId,
+        new_text: &str,
+    ) -> ChatResult<()> {
+        let channel_id = Self::parse_channel_id(channel)?;
+        let msg_id = Self::parse_message_id(message_id)?;
+        let builder = EditMessage::new().content(new_text);
+        channel_id
+            .edit_message(&self.http, msg_id, builder)
+            .await
+            .map_err(map_serenity_err)?;
+        Ok(())
+    }
 }
 
 /// Edit an existing Discord message. Useful for streaming LLM responses.
