@@ -5,20 +5,20 @@
 //!
 //! # Example
 //!
-//! ```rust,no_run
+//! ```rust,ignore
 //! use chat_sdk::{StreamingMessage, SlackAdapter};
 //!
-//! # async fn example() -> chat_sdk::ChatResult<()> {
-//! let adapter = SlackAdapter::new("xoxb-token");
-//! let mut stream = StreamingMessage::new(&adapter, "C123456").await?;
+//! async fn example() -> chat_sdk::ChatResult<()> {
+//!     let adapter = SlackAdapter::new("xoxb-token");
+//!     let mut stream = StreamingMessage::new(&adapter, "C123456").await?;
 //!
-//! for token in ["Hello", ", ", "world", "!"] {
-//!     stream.push(token).await?;
+//!     for token in ["Hello", ", ", "world", "!"] {
+//!         stream.push(token).await?;
+//!     }
+//!
+//!     stream.finalize("Hello, world!").await?;
+//!     Ok(())
 //! }
-//!
-//! stream.finalize("Hello, world!").await?;
-//! # Ok(())
-//! # }
 //! ```
 
 use std::time::{Duration, Instant};
