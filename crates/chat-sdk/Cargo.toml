@@ -11,6 +11,7 @@ description = "Chat service abstraction library with adapter pattern"
 default = ["slack", "discord"]
 slack = []
 discord = []
+redis = ["dep:redis"]
 
 [dependencies]
 async-trait.workspace = true
@@ -28,6 +29,7 @@ hmac.workspace = true
 sha2.workspace = true
 hex.workspace = true
 serenity.workspace = true
+redis = { workspace = true, optional = true }
 
 [dev-dependencies]
 tokio-test.workspace = true
