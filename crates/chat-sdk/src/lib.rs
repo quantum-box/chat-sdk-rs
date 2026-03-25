@@ -5,6 +5,7 @@
 
 pub mod adapter;
 pub mod error;
+pub mod event;
 pub mod model;
 pub mod oauth;
 
@@ -16,6 +17,10 @@ pub mod discord;
 
 pub use adapter::ChatAdapter;
 pub use error::{ChatError, ChatResult};
+pub use event::{
+    ChatEvent, EventHandlerBuilder, EventKind, EventRouter, MentionEvent, MessageDeletedEvent,
+    ReactionEvent,
+};
 pub use model::{Channel, Message, MessageId, Reaction, SendMessage, Thread, User};
 pub use oauth::{OAuthConfig, TokenData, TokenStore};
 
