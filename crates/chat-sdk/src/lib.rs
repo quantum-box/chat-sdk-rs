@@ -40,3 +40,5 @@ pub use slack::SlackAdapter;
 
 #[cfg(feature = "discord")]
 pub use discord::DiscordAdapter;
+#[cfg(feature = "discord")]
+pub use discord::edit_message as discord_edit_message;

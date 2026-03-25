@@ -53,6 +53,9 @@ async-trait = "0.1"
 # URL encoding
 urlencoding = "2"
 
+# Discord
+serenity = { version = "0.12", default-features = false, features = ["model", "http", "rustls_backend"] }
+
 # HMAC signature verification
 hmac = "0.12"
 sha2 = "0.10"

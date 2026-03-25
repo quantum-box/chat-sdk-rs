@@ -1,4 +1,7 @@
 [advisories]
+# rustls-webpki 0.102.x CRL distribution point issue – low impact,
+# brought in transitively by serenity 0.12 → rustls 0.22.
+ignore = ["RUSTSEC-2026-0049"]
 
 [licenses]
 allow = [
