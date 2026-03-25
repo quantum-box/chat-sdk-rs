@@ -38,4 +38,12 @@ pub trait ChatAdapter: Send + Sync {
 
     /// Get thread replies for a message.
     async fn get_thread(&self, channel: &str, parent_id: &MessageId) -> ChatResult<Vec<Message>>;
+
+    /// Edit an existing message. Used for streaming LLM responses via Post+Edit pattern.
+    async fn edit_message(
+        &self,
+        channel: &str,
+        message_id: &MessageId,
+        new_text: &str,
+    ) -> ChatResult<()>;
 }
