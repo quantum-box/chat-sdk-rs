@@ -189,6 +189,11 @@ impl ChatAdapter for SlackAdapter {
         if let Some(ref thread_id) = msg.thread_id {
             body["thread_ts"] = serde_json::Value::String(thread_id.0.clone());
         }
+        if !msg.cards.is_empty() {
+            let attachments: Vec<serde_json::Value> =
+                msg.cards.iter().map(|c| c.to_slack_blocks()).collect();
+            body["attachments"] = serde_json::Value::Array(attachments);
+        }
         let resp: SlackPostMessageResp = self.api_post("chat.postMessage", &body).await?;
         Ok(MessageId(resp.ts))
     }

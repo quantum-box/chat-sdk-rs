@@ -4,6 +4,7 @@
 //! Supports multiple platforms (Slack, Discord, etc.) through a unified trait interface.
 
 pub mod adapter;
+pub mod card;
 pub mod command;
 pub mod error;
 pub mod event;
@@ -19,6 +20,7 @@ pub mod slack;
 pub mod discord;
 
 pub use adapter::ChatAdapter;
+pub use card::{Author, Card, CardBuilder, Color, Field};
 pub use command::{CommandResponse, CommandRouter, ResponseBuilder, SlashCommand};
 pub use error::{ChatError, ChatResult};
 pub use event::{

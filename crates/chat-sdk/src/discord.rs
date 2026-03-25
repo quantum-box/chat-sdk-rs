@@ -165,6 +165,11 @@ impl ChatAdapter for DiscordAdapter {
                 "message_id": thread_id.0,
             });
         }
+        if !msg.cards.is_empty() {
+            let embeds: Vec<serde_json::Value> =
+                msg.cards.iter().map(|c| c.to_discord_embed()).collect();
+            body["embeds"] = serde_json::Value::Array(embeds);
+        }
         let resp: DiscordMessage = self
             .api_post(&format!("/channels/{}/messages", msg.channel), &body)
             .await?;
