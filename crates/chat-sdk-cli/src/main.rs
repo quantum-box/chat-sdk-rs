@@ -77,11 +77,8 @@ async fn main() -> Result<()> {
                 thread = ?thread,
                 "Sending message"
             );
-            let msg = SendMessage {
-                channel,
-                text: message,
-                thread_id: thread.map(MessageId),
-            };
+            let mut msg = SendMessage::text(channel, message);
+            msg.thread_id = thread.map(MessageId);
             let id = adapter.send_message(msg).await?;
             println!("{}", id.0);
         }
