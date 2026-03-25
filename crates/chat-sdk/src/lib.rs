@@ -11,6 +11,7 @@ pub mod event;
 pub mod format;
 pub mod model;
 pub mod oauth;
+pub mod state;
 pub mod streaming;
 pub mod webhook;
 
@@ -31,7 +32,11 @@ pub use event::{
 pub use format::{Document, MessageFormatter, Node, Platform};
 pub use model::{Channel, Message, MessageId, Reaction, SendMessage, Thread, User};
 pub use oauth::{OAuthConfig, TokenData, TokenStore};
+pub use state::{InMemoryStateAdapter, Session, StateAdapter};
 pub use streaming::StreamingMessage;
+
+#[cfg(feature = "redis")]
+pub use state::RedisStateAdapter;
 pub use webhook::{
     SlackEnvelope, SlackEvent, WebhookConfig, WebhookServer, router as webhook_router,
     start as start_webhook, verify_signature,
