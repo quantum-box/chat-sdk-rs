@@ -7,6 +7,7 @@ pub mod adapter;
 pub mod command;
 pub mod error;
 pub mod event;
+pub mod format;
 pub mod model;
 pub mod oauth;
 pub mod webhook;
@@ -24,6 +25,7 @@ pub use event::{
     ChatEvent, EventHandlerBuilder, EventKind, EventRouter, MentionEvent, MessageDeletedEvent,
     ReactionEvent,
 };
+pub use format::{Document, MessageFormatter, Node, Platform};
 pub use model::{Channel, Message, MessageId, Reaction, SendMessage, Thread, User};
 pub use oauth::{OAuthConfig, TokenData, TokenStore};
 pub use webhook::{
