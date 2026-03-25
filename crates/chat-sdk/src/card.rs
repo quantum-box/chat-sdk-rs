@@ -173,16 +173,17 @@ impl Card {
         }
 
         // Thumbnail as accessory on description or standalone
-        if let Some(ref thumb) = self.thumbnail_url {
-            if let Some(last_section) = blocks.iter_mut().rev().find(|b| {
-                b.get("type").and_then(|v| v.as_str()) == Some("section")
-            }) {
-                last_section["accessory"] = serde_json::json!({
-                    "type": "image",
-                    "image_url": thumb,
-                    "alt_text": "thumbnail",
-                });
-            }
+        if let Some(ref thumb) = self.thumbnail_url
+            && let Some(last_section) = blocks
+                .iter_mut()
+                .rev()
+                .find(|b| b.get("type").and_then(|v| v.as_str()) == Some("section"))
+        {
+            last_section["accessory"] = serde_json::json!({
+                "type": "image",
+                "image_url": thumb,
+                "alt_text": "thumbnail",
+            });
         }
 
         // Fields – group into section blocks (max 10 fields per section in Slack)
@@ -280,7 +281,10 @@ impl Card {
 
         if let Some(ref author) = self.author {
             let mut author_obj = serde_json::Map::new();
-            author_obj.insert("name".into(), serde_json::Value::String(author.name.clone()));
+            author_obj.insert(
+                "name".into(),
+                serde_json::Value::String(author.name.clone()),
+            );
             if let Some(ref url) = author.url {
                 author_obj.insert("url".into(), serde_json::Value::String(url.clone()));
             }
@@ -294,17 +298,11 @@ impl Card {
         }
 
         if let Some(ref image_url) = self.image_url {
-            embed.insert(
-                "image".into(),
-                serde_json::json!({ "url": image_url }),
-            );
+            embed.insert("image".into(), serde_json::json!({ "url": image_url }));
         }
 
         if let Some(ref thumb) = self.thumbnail_url {
-            embed.insert(
-                "thumbnail".into(),
-                serde_json::json!({ "url": thumb }),
-            );
+            embed.insert("thumbnail".into(), serde_json::json!({ "url": thumb }));
         }
 
         if self.footer.is_some() || self.footer_icon_url.is_some() {
@@ -363,7 +361,12 @@ impl CardBuilder {
     }
 
     /// Add a key-value field.
-    pub fn field(mut self, name: impl Into<String>, value: impl Into<String>, inline: bool) -> Self {
+    pub fn field(
+        mut self,
+        name: impl Into<String>,
+        value: impl Into<String>,
+        inline: bool,
+    ) -> Self {
         self.fields.push(Field {
             name: name.into(),
             value: value.into(),

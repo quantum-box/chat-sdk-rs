@@ -147,20 +147,19 @@ impl EventRouter {
         let mut first_err: Option<crate::error::ChatError> = None;
 
         for (k, handler) in &self.handlers {
-            if *k == kind {
-                if let Err(e) = handler(event.clone()).await {
-                    if first_err.is_none() {
-                        first_err = Some(e);
-                    }
-                }
+            if *k == kind
+                && let Err(e) = handler(event.clone()).await
+                && first_err.is_none()
+            {
+                first_err = Some(e);
             }
         }
 
         for handler in &self.catch_all {
-            if let Err(e) = handler(event.clone()).await {
-                if first_err.is_none() {
-                    first_err = Some(e);
-                }
+            if let Err(e) = handler(event.clone()).await
+                && first_err.is_none()
+            {
+                first_err = Some(e);
             }
         }
 

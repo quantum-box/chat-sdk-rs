@@ -5,7 +5,7 @@ resolver = "2"
 [workspace.package]
 version = "0.1.0"
 edition = "2024"
-rust-version = "1.85.0"
+rust-version = "1.88.0"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/quantum-box/chat-sdk-rs"
 description = "Rust Chat Service Abstraction Library - CLI, OAuth, AI Agent ready"
@@ -52,6 +52,9 @@ async-trait = "0.1"
 
 # URL encoding
 urlencoding = "2"
+
+# Discord
+serenity = { version = "0.12", default-features = false, features = ["model", "http", "rustls_backend"] }
 
 # HMAC signature verification
 hmac = "0.12"
