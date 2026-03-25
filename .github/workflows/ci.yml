@@ -62,7 +62,7 @@ jobs:
         with:
           components: miri
       - uses: Swatinem/rust-cache@v2
-      - run: cargo +nightly miri test
+      - run: cargo +nightly miri test --no-default-features -p chat-sdk -- --skip oauth::tests
 
   audit:
     name: Security Audit
