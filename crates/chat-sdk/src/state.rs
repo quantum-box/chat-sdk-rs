@@ -12,7 +12,7 @@ use async_trait::async_trait;
 use serde::{Deserialize, Serialize};
 use tokio::sync::RwLock;
 
-use crate::error::{ChatError, ChatResult};
+use crate::error::ChatResult;
 
 /// A user session with metadata.
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -237,6 +237,7 @@ impl StateAdapter for InMemoryStateAdapter {
 #[cfg(feature = "redis")]
 mod redis_impl {
     use super::*;
+    use crate::error::ChatError;
 
     /// Redis-backed state adapter for production use.
     ///
