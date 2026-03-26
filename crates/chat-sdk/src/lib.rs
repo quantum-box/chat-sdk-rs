@@ -38,9 +38,15 @@ pub use streaming::StreamingMessage;
 #[cfg(feature = "redis")]
 pub use state::RedisStateAdapter;
 pub use webhook::{
-    SlackEnvelope, SlackEvent, WebhookConfig, WebhookServer, router as webhook_router,
-    start as start_webhook, verify_signature,
+    DiscordCommandOption, DiscordInteraction, DiscordInteractionData, DiscordInteractionResponse,
+    DiscordInteractionResponseData, DiscordInteractionUser, DiscordMember, SlackEnvelope,
+    SlackEvent, SlackWebhookHandler, WebhookConfig, WebhookHandler, WebhookResponse, WebhookServer,
+    handler_router, router as webhook_router, start as start_webhook, verify_signature,
+    verify_slack_signature,
 };
+
+#[cfg(feature = "discord")]
+pub use webhook::{DiscordWebhookHandler, verify_discord_signature};
 
 #[cfg(feature = "slack")]
 pub use slack::SlackAdapter;

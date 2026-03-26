@@ -10,7 +10,7 @@ description = "Chat service abstraction library with adapter pattern"
 [features]
 default = ["slack", "discord"]
 slack = []
-discord = []
+discord = ["dep:ed25519-dalek"]
 redis = ["dep:redis"]
 
 [dependencies]
@@ -30,6 +30,7 @@ sha2.workspace = true
 hex.workspace = true
 serenity.workspace = true
 redis = { workspace = true, optional = true }
+ed25519-dalek = { workspace = true, optional = true }
 
 [dev-dependencies]
 tokio-test.workspace = true
