@@ -54,7 +54,7 @@ async-trait = "0.1"
 urlencoding = "2"
 
 # Discord
-serenity = { version = "0.12", default-features = false, features = ["model", "http", "rustls_backend"] }
+serenity = { version = "0.12", default-features = false, features = ["model", "http", "native_tls_backend"] }
 
 # HMAC signature verification
 hmac = "0.12"

@@ -1,0 +1,37 @@
+name: Feature request
+description: Suggest a focused improvement for chat-sdk-rs
+title: "feat: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What workflow or integration is blocked?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: What would you like to add or change?
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Slack adapter
+        - Discord adapter
+        - CLI
+        - OAuth
+        - Webhooks
+        - Formatting
+        - Documentation
+        - Other
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional context
+      description: Links, API references, or tradeoffs to consider.
