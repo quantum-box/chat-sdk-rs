@@ -316,14 +316,14 @@ mod tests {
 
     #[test]
     fn platform_name() {
-        let adapter = SlackAdapter::new("xoxb-test");
+        let adapter = SlackAdapter::new("test-token");
         assert_eq!(adapter.platform(), "slack");
     }
 
     #[test]
     fn with_client_constructor() {
         let client = Client::new();
-        let adapter = SlackAdapter::with_client(client, "xoxb-test");
+        let adapter = SlackAdapter::with_client(client, "test-token");
         assert_eq!(adapter.platform(), "slack");
     }
 

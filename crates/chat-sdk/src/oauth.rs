@@ -291,8 +291,8 @@ mod tests {
         let store = TokenStore::with_dir(dir.clone());
 
         let token = TokenData {
-            access_token: "xoxb-test-token".into(),
-            refresh_token: Some("xoxr-refresh".into()),
+            access_token: "test-access-token".into(),
+            refresh_token: Some("test-refresh-token".into()),
             expires_at: Some(1_700_000_000),
             scopes: vec!["chat:write".into()],
             platform: "slack".into(),
@@ -302,7 +302,7 @@ mod tests {
         assert!(store.exists("slack"));
 
         let loaded = store.load("slack").unwrap();
-        assert_eq!(loaded.access_token, "xoxb-test-token");
+        assert_eq!(loaded.access_token, "test-access-token");
         assert_eq!(loaded.platform, "slack");
 
         store.delete("slack").unwrap();

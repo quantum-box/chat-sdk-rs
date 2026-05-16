@@ -9,7 +9,7 @@
 //! use chat_sdk::{StreamingMessage, SlackAdapter};
 //!
 //! async fn example() -> chat_sdk::ChatResult<()> {
-//!     let adapter = SlackAdapter::new("xoxb-token");
+//!     let adapter = SlackAdapter::new("slack-bot-token");
 //!     let mut stream = StreamingMessage::new(&adapter, "C123456").await?;
 //!
 //!     for token in ["Hello", ", ", "world", "!"] {

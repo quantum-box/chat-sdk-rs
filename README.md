@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/quantum-box/chat-sdk-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/quantum-box/chat-sdk-rs/actions/workflows/ci.yml)
 [![License: MIT OR Apache-2.0](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](LICENSE-MIT)
+[![Rust 1.88+](https://img.shields.io/badge/rust-1.88%2B-orange.svg)](Cargo.toml)
 
 Rust Chat Service Abstraction Library with adapter pattern. Provides a unified `ChatAdapter` trait to interact with multiple chat platforms (Slack, Discord, etc.) through a single API, plus a CLI for quick operations and OAuth helpers for authentication.
 
@@ -11,14 +12,23 @@ Rust Chat Service Abstraction Library with adapter pattern. Provides a unified `
 - **Type-safe models** - `Message`, `Channel`, `User`, `Thread`, `Reaction` with serde support
 - **OAuth2 built-in** - Authorization URL generation and CSRF protection via `OAuthConfig`
 - **CLI tool** - Send messages, list channels, and authenticate from the terminal
+- **Webhook-ready** - Slack Events API and Discord Interactions helpers with signature verification
 - **AI Agent ready** - Structured trait design for exposing chat operations via MCP Tools
 - **Async-first** - Built on `tokio` and `async-trait`
+
+## Project Links
+
+- [Examples](examples/README.md)
+- [Changelog](CHANGELOG.md)
+- [Contributing](CONTRIBUTING.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [License](#license)
 
 ## Installation
 
 ### Requirements
 
-- Rust 1.85.0 or later (edition 2024)
+- Rust 1.88.0 or later (edition 2024)
 
 ### Library
 
@@ -136,7 +146,7 @@ impl ChatAdapter for SlackAdapter {
 ```rust
 use chat_sdk::model::SendMessage;
 
-let adapter = SlackAdapter::new("xoxb-your-token".into());
+let adapter = SlackAdapter::new("slack-bot-token".into());
 
 // Send to a channel
 let msg = SendMessage {
@@ -253,12 +263,29 @@ chat-sdk auth slack
 RUST_LOG=debug chat-sdk send --platform slack --channel general "Hello"
 ```
 
+## Examples
+
+Minimal Slack and Discord examples are available under [examples/](examples/README.md).
+They use environment variables for all credentials.
+
+```bash
+# Slack
+export CHAT_SDK_TOKEN="<slack-bot-token>"
+export CHAT_SDK_CHANNEL="C0123456789"
+cargo run --manifest-path examples/slack_minimal/Cargo.toml
+
+# Discord
+export CHAT_SDK_TOKEN="..."
+export CHAT_SDK_CHANNEL="123456789012345678"
+cargo run --manifest-path examples/discord_minimal/Cargo.toml
+```
+
 ## Supported Platforms
 
 | Platform | Status   | Feature Flag |
 |----------|----------|--------------|
-| Slack    | Planned  | `slack`      |
-| Discord  | Planned  | `discord`    |
+| Slack    | Available | `slack`      |
+| Discord  | Available | `discord`    |
 | Teams    | Future   | -            |
 | LINE     | Future   | -            |
 
@@ -371,6 +398,7 @@ impl ChatTools {
 
 ```
 chat-sdk-rs/
+├── examples/                  # Minimal Slack and Discord example projects
 ├── crates/
 │   ├── chat-sdk/              # Core library
 │   │   ├── adapter.rs         # ChatAdapter trait
@@ -385,7 +413,10 @@ chat-sdk-rs/
 
 ## Contributing
 
-Contributions are welcome! To get started:
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full
+workflow.
+
+To get started:
 
 ```bash
 git clone https://github.com/quantum-box/chat-sdk-rs.git
@@ -399,7 +430,7 @@ cargo test
 1. **Format** - `cargo +nightly fmt`
 2. **Lint** - `cargo clippy --all-targets --all-features`
 3. **Test** - `cargo test --all-features`
-4. **MSRV check** - Ensure compatibility with Rust 1.85.0
+4. **MSRV check** - Ensure compatibility with Rust 1.88.0
 
 ### CI checks
 
@@ -408,7 +439,7 @@ All PRs are validated by CI, which runs:
 - `rustfmt` formatting check (nightly)
 - `clippy` lint (all targets, all features)
 - Unit tests (default features + no-default-features)
-- MSRV verification (Rust 1.85.0)
+- MSRV verification (Rust 1.88.0)
 - Miri memory safety testing
 - `cargo-deny` license and advisory audit
 - Code coverage via LLVM (uploaded to Codecov)

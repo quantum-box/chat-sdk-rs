@@ -1,0 +1,11 @@
+[package]
+name = "chat-sdk-slack-minimal"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[workspace]
+
+[dependencies]
+chat-sdk = { path = "../../crates/chat-sdk", default-features = false, features = ["slack"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
